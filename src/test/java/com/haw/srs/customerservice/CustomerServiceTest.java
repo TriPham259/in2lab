@@ -41,8 +41,8 @@ class CustomerServiceTest {
         realCustomerRepository.deleteAll();
 
         Customer from = new Customer("John", "Smith", Gender.MALE);
-        from.addReservation(new Reservation("James Bond 007"));
-        from.addReservation(new Reservation("Rosamunde Pilcher"));
+        from.addReservation(new Reservation(new Movie("James Bond 007")));
+        from.addReservation(new Reservation(new Movie("Rosamunde Pilcher")));
         realCustomerRepository.save(from);
         Customer to = new Customer("Eva", "Miller", Gender.FEMALE);
         realCustomerRepository.save(to);

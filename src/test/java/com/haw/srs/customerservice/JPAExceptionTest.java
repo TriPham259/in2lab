@@ -27,7 +27,7 @@ class JPAExceptionTest {
 
         Customer customer = new Customer("Jane", "Doe", Gender.FEMALE,
                 "jane.doe@mail.com",null);
-        Reservation reservation = new Reservation("James Bond 007");
+        Reservation reservation = new Reservation(new Movie("James Bond 007"));
         customer.addReservation(reservation);
         
         entityManager.persist(customer);

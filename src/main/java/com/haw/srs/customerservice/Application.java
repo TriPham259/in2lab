@@ -23,6 +23,7 @@ class PopulateTestDataRunner implements CommandLineRunner {
 
     private final CustomerRepository customerRepository;
 
+
     @Autowired
     public PopulateTestDataRunner(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -35,11 +36,14 @@ class PopulateTestDataRunner implements CommandLineRunner {
         Arrays.asList(
                 "Miller,Doe,Smith".split(","))
                 .forEach(
-                        name -> customerRepository.save(new Customer("Jane", name, Gender.FEMALE, name + "@dummy.org", null))
+                        name -> customerRepository.save(new Customer("Jane", name, Gender.FEMALE,
+                                name + "@dummy.org", null))
                 );
 
-        Customer customer = new Customer("Stefan", "Sarstedt", Gender.MALE, "stefan.sarstedt@haw-hamburg.de", new PhoneNumber("+49-40-123456"));
-        Reservation reservation = new Reservation("James Bond 007");
+        Customer customer = new Customer("Stefan", "Sarstedt", Gender.MALE,
+                "stefan.sarstedt@haw-hamburg.de", new PhoneNumber("+49-40-123456"));
+        Movie movie = new Movie("James Bond 007");
+        Reservation reservation = new Reservation(movie);
         customer.addReservation(reservation);
         customerRepository.save(customer);
     }
