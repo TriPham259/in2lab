@@ -11,7 +11,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -21,10 +20,15 @@ public class ReservationRepositoryTest {
     @Autowired
     private ReservationRepository reservationRepository;
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
     @BeforeEach
     void setUp() {
-        // !!!!!!! delete com.haw.srs.customerserv [23503-214]]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
-//        this.reservationRepository.deleteAll();
+        // to delete reservationRepo, must delete customerRepo before that
+        // to avoid org.hibernate.exception.ConstraintViolationException
+        this.customerRepository.deleteAll();
+        this.reservationRepository.deleteAll();
 
         Movie movie = new Movie("James Bond 007");
         Reservation reservation = new Reservation(movie);
@@ -33,8 +37,7 @@ public class ReservationRepositoryTest {
 
     @Test
     void getReservationSuccess() {
-//        Optional<Reservation> reservation = reservationRepository.findByMovie("James Bond 007");
-//        assertThat(reservation).isPresent();
-        assertTrue(1 == 1);
+        Optional<Reservation> reservation = reservationRepository.findByMovie("James Bond 007");
+        assertThat(reservation).isPresent();
     }
 }
